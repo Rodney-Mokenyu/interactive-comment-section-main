@@ -53,12 +53,12 @@ body {
   justify-content: center;
   padding: 0rem;
   color: var(--grey-500);
-  font-size: 0.95rem;
+  font-size: 0.99rem;
 }
 
 /* Main Container for all comments - responsive width */
 .container {
-  background-color: var(--purple-600);
+  background-color: transparent;
   width: 100%;
   max-inline-size: 48rem; 
   padding: 0;
@@ -363,7 +363,6 @@ body {
 
 .deleteNotifier-buttonsGroup {
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 0.8rem;
 }
@@ -532,7 +531,6 @@ body {
 
   /* Delete Confirmation Modal Buttons on Desktop */
   .deleteNotifier-buttonsGroup {
-    flex-direction: row;
     justify-content: space-around;
     gap: 1rem;
   }
