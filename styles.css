@@ -1,0 +1,542 @@
+/* --- Global Styles & Resets --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Rubik', sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* --- Color Variables --- */
+:root {
+  /* Primary */
+  --purple-600: hsl(238, 40%, 52%); /* Moderate Blue */
+  --purple-200: hsl(239, 57%, 85%); /* Light Grayish Blue */
+  --pink-400: hsl(358, 79%, 66%);  /* Soft Red */
+  --pink-200: hsl(357, 100%, 86%); /* Pale Red */
+
+  /* Neutral */
+  --grey-800: hsl(212, 24%, 26%); /* Dark Blue */
+  --grey-500: hsl(211, 10%, 45%); /* Grayish Blue */
+  --grey-100: hsl(223, 19%, 93%); /* Light Gray */
+  --grey-50: hsl(228, 33%, 97%);  /* Very Light Gray */
+  --white: hsl(0, 100%, 100%);
+}
+
+/* --- Body and Main Layout --- */
+body {
+  position: relative;
+  background-color: var(--grey-100);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  color: var(--grey-500);
+  font-size: 0.95rem;
+}
+
+/* Main Container for all comments - responsive width */
+.container {
+  background-color: transparent !important;
+  width: 100%;
+  max-inline-size: 48rem; /* Changed from max-width */
+  padding: 0;
+}
+
+/* Comments Container (holds individual comments and new comment box) */
+.comments-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* --- Comment Card Styling (Applies to individual comments and replies) --- */
+.individual-comment-block,
+.replyAndUpvoteDivWrapper {
+  display: flex;
+  flex-direction: column; /* Stack main content and footer actions vertically */
+  gap: 1rem; /* Space between content and footer */
+  background-color: var(--white);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.05);
+  position: relative; /* Needed for desktop absolute positioning of buttons */
+}
+
+/* --- Comment Main Content (Row 1 & 2 on mobile) --- */
+.comment-main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem; /* Space between user-info-row and comment-content */
+  flex-grow: 1; /* Allows it to take available space on desktop */
+}
+
+/* --- User Info Row (Row 1 on mobile) --- */
+.user-info-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: nowrap; /* Keep user info on one line */
+  /* No need for space-between here, action buttons are in a different row */
+}
+
+.profile-image {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.username {
+  color: var(--grey-800);
+  font-weight: 700;
+}
+
+.createdAt {
+  color: var(--grey-500);
+  font-size: 0.9rem;
+}
+
+/* "You" Badge for Current User */
+.you-badge {
+  background-color: var(--purple-600);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.2rem;
+  margin-left: 0.3rem;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+/* Comment Content Text (Row 2 on mobile) */
+.comment-content {
+  color: var(--grey-500);
+  line-height: 1.5;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.replied-to-username {
+  color: var(--purple-600);
+  font-weight: 700;
+  margin-right: 0.25rem;
+}
+
+/* --- Comment Footer Actions (Row 3 on mobile) --- */
+.comment-footer-actions {
+  display: flex;
+  flex-direction: row; /* Upvote left, actions right */
+  justify-content: space-between; /* Pushes them to opposite ends */
+  align-items: center;
+  width: 100%; /* Take full width of parent comment card */
+  margin-top: 0.5rem; /* Small space from content above */
+}
+
+/* --- Upvote / Score Section (Mobile: horizontal, within footer actions) --- */
+.upvote {
+  background-color: var(--grey-50);
+  display: flex;
+  flex-direction: row; /* Horizontal for mobile now */
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem; /* Space between plus, score, minus */
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.8rem; /* Adjusted padding to look right horizontally */
+  width: auto; /* Width adapts to content */
+  height: 2.5rem; /* Fixed height (40px) */
+  flex-shrink: 0;
+}
+
+.upvote img {
+  cursor: pointer;
+  padding: 0.3rem;
+  transition: opacity 0.2s ease;
+}
+
+.upvote img:hover {
+  opacity: 0.7;
+}
+
+.score {
+  color: var(--purple-600);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* Action Buttons (Reply, Delete, Edit) */
+.action-button-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn.reply-button,
+.btn.edit-button,
+.btn.text-danger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  padding: 0.5rem;
+  border: none;
+  background: none;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.btn.reply-button {
+  color: var(--purple-600);
+}
+
+.btn.edit-button {
+  color: var(--purple-600) !important;
+}
+
+.btn.text-danger {
+  color: var(--pink-400) !important;
+}
+
+.btn.reply-button:hover,
+.btn.edit-button:hover,
+.btn.text-danger:hover {
+  opacity: 0.7;
+}
+
+.btn.reply-button img,
+.btn.edit-button img,
+.btn.text-danger img {
+  height: 0.8rem;
+  width: 0.8rem;
+}
+
+/* --- Replies Container (Indentation and Vertical Line) --- */
+.individual-comment-block-plus-replies {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.replies-container {
+  position: relative;
+  border-left: 0.125rem solid var(--grey-100);
+  padding-left: 1rem;
+  margin-left: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* --- New Comment Box (Mobile: textarea row 1, avatar & button row 2) --- */
+.new-comment-box {
+  display: flex;
+  flex-direction: column; /* Stacks textarea and bottom row */
+  gap: 1rem; /* Space between rows */
+  background-color: var(--white);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.05);
+  margin-top: 1rem;
+}
+
+.new-comment-input {
+  /* This is now a direct child of new-comment-box */
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  resize: vertical;
+  min-height: 6rem;
+  border-radius: 0.375rem;
+  border: 0.0625rem solid var(--grey-100);
+  color: var(--grey-800);
+  width: 100%; /* Take full width of its parent */
+}
+
+.new-comment-input:focus {
+  border-color: var(--purple-600);
+  outline: none;
+  box-shadow: 0 0 0 0.15rem rgba(140, 142, 255, 0.25);
+}
+
+.new-comment-input::placeholder {
+  color: var(--grey-500);
+  opacity: 1;
+}
+
+/* New Comment Bottom Row (Mobile: avatar and send button side-by-side) */
+.new-comment-bottom-row {
+  display: flex;
+  flex-direction: row; /* Avatar and send button in a row */
+  justify-content: space-between; /* Space between them */
+  align-items: center; /* Vertically align them */
+  width: 100%; /* Take full width of parent */
+}
+
+.new-comment-user-image {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%; /* Ensure circular */
+  object-fit: cover;
+}
+
+.send-button {
+  /* This is now a child of new-comment-bottom-row */
+  color: var(--white);
+  font-weight: 700;
+  background-color: var(--purple-600);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  /* align-self: flex-end; Removed as justify-content handles positioning */
+  text-transform: uppercase;
+  letter-spacing: 0.0625rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.send-button:hover {
+  background-color: var(--purple-200);
+}
+
+/* --- Delete Confirmation Modal Styling --- */
+.deleteNotifier-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.deleteNotifier-container {
+  background: var(--white);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  width: 90%;
+  max-inline-size: 25rem; /* Changed from max-width */
+  box-shadow: 0 0 0.9375rem rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+}
+
+.delete-notifier-header {
+  color: var(--grey-800);
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+#delete-messege {
+  color: var(--grey-500);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.deleteNotifier-buttonsGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.deleteNotifier-buttonsGroup .btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.03125rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.deleteNotifier-buttonsGroup .cancel-delete-button {
+  background-color: var(--grey-500);
+  color: var(--white);
+}
+
+.deleteNotifier-buttonsGroup .cancel-delete-button:hover {
+  background-color: var(--grey-800);
+}
+
+.deleteNotifier-buttonsGroup .confirm-delete-button {
+  background-color: var(--pink-400);
+  color: var(--white);
+}
+
+.deleteNotifier-buttonsGroup .confirm-delete-button:hover {
+  background-color: var(--pink-200);
+}
+
+
+/* --- DESKTOP LAYOUT (Min-width: 768px / 48rem) --- */
+@media (min-width: 48rem) {
+  body {
+    padding: 3rem;
+  }
+
+  .container {
+    max-inline-size: 45.625rem; /* Changed from max-width */
+  }
+
+  /* Individual Comment Block and Reply Block Wrapper */
+  .individual-comment-block,
+  .replyAndUpvoteDivWrapper {
+    flex-direction: row; /* Desktop is row layout */
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.25rem;
+  }
+
+  /* Upvote / Score Section on Desktop (Vertical) */
+  .upvote {
+    flex-direction: column; /* Vertical for desktop */
+    width: 2.5rem;
+    height: 6rem;
+    padding: 0.8rem 0;
+    justify-content: space-around;
+    margin: 0;
+  }
+
+  .upvote img {
+    padding: 0;
+  }
+
+  /* Comment Main Content on Desktop */
+  .comment-main-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  /* User Info Row on Desktop */
+  .user-info-row {
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  .profile-image {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+
+  .you-badge {
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+  }
+
+  /* Comment Footer Actions on Desktop */
+  .comment-footer-actions {
+    display: none; /* Hide for desktop, action buttons are absolutely positioned */
+  }
+
+  /* Action Buttons on Desktop (Absolute positioning) */
+  .action-button-wrapper {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    margin-left: 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .btn.reply-button,
+  .btn.edit-button,
+  .btn.text-danger {
+    padding: 0.25rem 0.5rem;
+    font-size: 1rem;
+  }
+
+  .btn.reply-button img,
+  .btn.edit-button img,
+  .btn.text-danger img {
+    height: 1rem;
+    width: 1rem;
+  }
+
+  /* Replies Container (Indentation Line) on Desktop */
+  .replies-container {
+    padding-left: 2.75rem;
+    margin-left: 3rem;
+  }
+
+  /* New Comment Box on Desktop */
+  .new-comment-box {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  /* New Comment Input Area (hidden on desktop) */
+  .new-comment-input-area {
+      display: none;
+  }
+
+  /* New Comment Input (direct child on desktop) */
+  .new-comment-input {
+    flex-grow: 1;
+    min-height: 6rem;
+    width: auto;
+  }
+
+  /* New Comment User Image (direct child on desktop) */
+  .new-comment-user-image {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+
+  /* Send Button (direct child on desktop) */
+  .send-button {
+    align-self: flex-start;
+    margin-top: 0;
+  }
+
+
+  /* New Comment Bottom Row (hidden on desktop) */
+  .new-comment-bottom-row {
+      display: none;
+  }
+
+
+  /* Delete Confirmation Modal Buttons on Desktop */
+  .deleteNotifier-buttonsGroup {
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 1rem;
+  }
+
+  .deleteNotifier-buttonsGroup .btn {
+    width: auto;
+    min-width: 9.375rem;
+  }
+}
