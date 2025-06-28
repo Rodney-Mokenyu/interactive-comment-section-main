@@ -45,22 +45,22 @@ p, h1, h2, h3, h4, h5, h6 {
 /* --- Body and Main Layout --- */
 body {
   position: relative;
-  background-color: var(--grey-100);
+  background-color: var(--grey-50);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 0rem;
   color: var(--grey-500);
   font-size: 0.95rem;
 }
 
 /* Main Container for all comments - responsive width */
 .container {
-  background-color: transparent !important;
+  background-color: transparent;
   width: 100%;
-  max-inline-size: 48rem; /* Changed from max-width */
+  max-inline-size: 48rem; 
   padding: 0;
 }
 
@@ -71,15 +71,17 @@ body {
   gap: 1rem;
 }
 
+
 /* --- Comment Card Styling (Applies to individual comments and replies) --- */
 .individual-comment-block,
 .replyAndUpvoteDivWrapper {
   display: flex;
-  flex-direction: column; /* Stack main content and footer actions vertically */
-  gap: 1rem; /* Space between content and footer */
+  flex-direction: column; 
+  gap: 1rem; 
   background-color: var(--white);
+  
   border-radius: 0.5rem;
-  padding: 1rem;
+  padding: 0.5rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.05);
   position: relative; /* Needed for desktop absolute positioning of buttons */
 }
@@ -539,4 +541,14 @@ body {
     width: auto;
     min-width: 9.375rem;
   }
+}
+
+/* footer */
+
+.attribution  {
+  font-size: 11px; 
+  text-align: center; 
+}
+.attribution a {
+   color: hsl(228, 45%, 44%); 
 }
