@@ -58,7 +58,7 @@ body {
 
 /* Main Container for all comments - responsive width */
 .container {
-  background-color: transparent;
+  background-color: var(--purple-600);
   width: 100%;
   max-inline-size: 48rem; 
   padding: 0;
